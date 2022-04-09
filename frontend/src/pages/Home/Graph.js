@@ -102,21 +102,16 @@ const sample = {
 };
 
 const Graph = () => {
-  const selected = null;
-
-  /* Define custom graph editing methods here */
-
   const [nodes, setNodes] = useState(sample.nodes);
   const [edges, setEdges] = useState(sample.edges);
+  const [selected, setSelected] = useState(null);
 
   const NodeTypes = GraphConfig.NodeTypes;
   const NodeSubtypes = GraphConfig.NodeSubtypes;
   const EdgeTypes = GraphConfig.EdgeTypes;
 
-  const getNodeIndex = (searchNode) => {
-    return nodes.findIndex((node) => {
-      return node[NODE_KEY] === searchNode[NODE_KEY];
-    });
+  const onSelect = (selected) => {
+    setSelected(selected);
   };
 
   const setStartDate = (node, newEdge) => {
@@ -162,7 +157,41 @@ const Graph = () => {
     }
   };
 
-  console.log("RENDER");
+  const onCreateNode = (x, y) => {
+    const id = nodes.length;
+    const newNode = {
+      id: id,
+      title: "New Task",
+      x,
+      y,
+      type: "task",
+    };
+    const newNodes = [...nodes, newNode];
+    const newEdges = [
+      ...edges,
+      { source: 0, target: id, type: "edge" },
+      { source: id, target: 13, type: "edge" },
+    ];
+    setNodes(newNodes);
+    setEdges(newEdges);
+  };
+
+  const onDeleteSelected = (selected) => {
+    if (selected.nodes.length == 0) {
+      return;
+    }
+    const node = [...selected.nodes][0][1];
+    if (node.type !== "task") {
+      return;
+    }
+    const newEdges = edges.filter(
+      (edge) => edge.source !== node.id && edge.target !== node.id,
+    );
+    setEdges([...newEdges]);
+    const newNodes = nodes.filter((n) => n[NODE_KEY] !== node.id);
+    setNodes([...newNodes]);
+    setSelected(null);
+  };
 
   return (
     <div className="w-full h-full border-1" id="graph">
@@ -185,7 +214,10 @@ const Graph = () => {
         nodeTypes={NodeTypes}
         nodeSubtypes={NodeSubtypes}
         edgeTypes={EdgeTypes}
+        onSelect={onSelect}
         onCreateEdge={onCreateEdge}
+        onCreateNode={onCreateNode}
+        onDeleteSelected={onDeleteSelected}
         /*
         onSelect={this.onSelect}
         onCreateNode={this.onCreateNode}
