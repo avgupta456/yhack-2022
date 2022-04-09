@@ -8,6 +8,7 @@ authors = ["Abhijit Gupta <avgupta456@gmail.com>"]
 python = "^3.8"
 fastapi = "^0.75.1"
 uvicorn = {extras = ["standard"], version = "^0.17.6"}
+sqlmodel = "^0.0.6"
 
 [tool.poetry.dev-dependencies]
 

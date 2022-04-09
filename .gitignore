@@ -2,3 +2,4 @@
 *.pyc
 
 backend/poetry.lock
+backend/database.db
