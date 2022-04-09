@@ -3,5 +3,5 @@ export function sleep(ms) {
 }
 
 export function classnames(...args) {
-  return args.join(' ');
+  return args.join(" ");
 }

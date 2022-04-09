@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 const SignUpScreen = () => {
   return <div>Sign Up Screen</div>;

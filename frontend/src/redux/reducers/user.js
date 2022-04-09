@@ -1,13 +1,13 @@
-import * as types from '../actions/userActions';
+import * as types from "../actions/userActions";
 
 const initialState = {
-  userId: JSON.parse(localStorage.getItem('userId')) || null,
+  userId: JSON.parse(localStorage.getItem("userId")) || null,
 };
 
 const switchStatement = (state = initialState, action) => {
   switch (action.type) {
     case types.LOGIN:
-      localStorage.setItem('userId', JSON.stringify(action.payload.userId));
+      localStorage.setItem("userId", JSON.stringify(action.payload.userId));
       return {
         ...state,
         userId: action.payload.userId,

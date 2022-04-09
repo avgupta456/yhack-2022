@@ -1,15 +1,15 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React from "react";
+import { useSelector } from "react-redux";
 
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-import Header from './Header';
-import LandingScreen from '../Landing';
-import { LoginScreen, SignUpScreen } from '../Auth';
-import HomeScreen from '../Home';
-import NoMatchScreen from '../Misc';
+import Header from "./Header";
+import LandingScreen from "../Landing";
+import { LoginScreen, SignUpScreen } from "../Auth";
+import HomeScreen from "../Home";
+import NoMatchScreen from "../Misc";
 
 function App() {
   const userId = useSelector((state) => state.user.userId);

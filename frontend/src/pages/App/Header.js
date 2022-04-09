@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import PropTypes from 'prop-types';
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import PropTypes from "prop-types";
 
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
-import { GiHamburgerMenu as HamburgerIcon } from 'react-icons/gi';
+import { GiHamburgerMenu as HamburgerIcon } from "react-icons/gi";
 
-import { logout as _logout } from '../../redux/actions/userActions';
-import rocketIcon from '../../assets/rocket.png';
-import { classnames } from '../../utils';
+import { logout as _logout } from "../../redux/actions/userActions";
+import rocketIcon from "../../assets/rocket.png";
+import { classnames } from "../../utils";
 
 const propTypes = {
   to: PropTypes.string.isRequired,
@@ -26,7 +26,7 @@ const StandardLink = ({ to, children, onClick, className }) => (
   <Link
     to={to}
     className={classnames(
-      'px-4 py-1 mr-3 rounded-sm bg-gray-200 hover:bg-gray-300 text-gray-700',
+      "px-4 py-1 mr-3 rounded-sm bg-gray-200 hover:bg-gray-300 text-gray-700",
       className,
     )}
     onClick={onClick}
@@ -43,7 +43,7 @@ const MobileLink = ({ to, children, onClick, className }) => (
   <Link
     to={to}
     className={classnames(
-      'block text-sm px-2 my-2 py-2 rounded-sm bg-gray-200 text-gray-700',
+      "block text-sm px-2 my-2 py-2 rounded-sm bg-gray-200 text-gray-700",
       className,
     )}
     onClick={onClick}
@@ -78,15 +78,13 @@ const Header = () => {
         </Link>
         {/* Content Pages */}
         <div className="hidden md:flex">
-          {isAuthenticated && (
-            <StandardLink to="/user">Dashboard</StandardLink>
-          )}
+          {isAuthenticated && <StandardLink to="/user">Dashboard</StandardLink>}
         </div>
         {/* Auth Pages: Sign Up, Log In, Log Out */}
         <div className="hidden md:flex ml-auto items-center text-base justify-center">
           {isAuthenticated ? (
             <StandardLink to="/" onClick={logout}>
-            Sign Out
+              Sign Out
             </StandardLink>
           ) : (
             <>
@@ -112,7 +110,7 @@ const Header = () => {
         </div>
       </div>
       {/* Hamburger Dropdown */}
-      <div className={classnames('p-5 pt-0', !toggle && 'hidden')}>
+      <div className={classnames("p-5 pt-0", !toggle && "hidden")}>
         {isAuthenticated ? (
           <>
             <MobileLink to="/user" onClick={() => setToggle(false)}>
