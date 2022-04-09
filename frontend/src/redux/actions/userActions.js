@@ -1,8 +1,8 @@
 export const LOGIN = "LOGIN";
 export const LOGOUT = "LOGOUT";
 
-export function login(userId) {
-  return { type: LOGIN, payload: { userId } };
+export function login(user) {
+  return { type: LOGIN, payload: { user } };
 }
 
 export function logout() {

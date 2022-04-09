@@ -52,6 +52,9 @@ USERS
 
 @app.post("/users/", response_model=UserRead)
 def create_user(*, session: Session = Depends(get_session), task: UserCreate):
+    curr_user = session.exec(select(User).where(User.email == task.email)).first()
+    if curr_user:
+        raise HTTPException(status_code=400, detail="User with that email already exists")
     db_user = User.from_orm(task)
     session.add(db_user)
     session.commit()
@@ -98,12 +101,12 @@ def delete_user(*, session: Session = Depends(get_session), user_id: int):
 
 @app.post("/users/login", response_model=int)
 def login_user(*, session: Session = Depends(get_session), user: UserLogin):
-    db_user: User = session.exec(select(User).where(User.email == user.email)).first()
+    db_user = session.exec(select(User).where(User.email == user.email)).first()
     if not db_user:
         raise HTTPException(status_code=404, detail="User not found")
     if db_user.password != user.password:
         raise HTTPException(status_code=401, detail="Incorrect password")
-    return db_user.id
+    return db_user
 
 
 """

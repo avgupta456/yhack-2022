@@ -1,3 +1,3 @@
-import { verifyLogin } from "./user";
+import { signUp, verifyLogin } from "./user";
 
-export { verifyLogin };
+export { signUp, verifyLogin };

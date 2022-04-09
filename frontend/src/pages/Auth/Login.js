@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { verifyLogin } from "../../api";
 import { login as _login } from "../../redux/actions/userActions";
@@ -15,11 +15,11 @@ const LoginScreen = () => {
   const dispatch = useDispatch();
 
   const login = async () => {
-    const userId = await verifyLogin(email, password);
-    console.log(userId);
-    if (userId !== null) {
-      dispatch(_login(userId));
-      navigate("/");
+    const user = await verifyLogin(email, password);
+    console.log(user);
+    if (user !== null) {
+      dispatch(_login(user));
+      navigate("/user");
     }
   };
 
@@ -33,13 +33,13 @@ const LoginScreen = () => {
           </h2>
           <p className="mt-2 text-center text-sm text-gray-600">
             Or
-            <a
-              href="#"
+            <Link
+              to="/signup"
               className="font-medium text-blue-600 hover:text-blue-500"
             >
               {" "}
               start your 14-day free trial
-            </a>
+            </Link>
           </p>
         </div>
         <div className="mt-8 space-y-6">
@@ -106,7 +106,7 @@ const LoginScreen = () => {
           <div>
             <button
               type="button"
-              onClick={() => login(email, password)}
+              onClick={() => login()}
               className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
             >
               Sign in

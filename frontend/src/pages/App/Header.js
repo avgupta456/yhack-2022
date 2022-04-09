@@ -80,7 +80,14 @@ const Header = () => {
         </Link>
         {/* Content Pages */}
         <div className="hidden md:flex">
-          {isAuthenticated && <StandardLink to="/user">Dashboard</StandardLink>}
+          {isAuthenticated && (
+            <Link
+              to="/user"
+              className="px-4 py-1 mr-3 rounded-sm bg-blue-500 hover:bg-blue-700 hover:text-gray-300"
+            >
+              Dashboard
+            </Link>
+          )}
         </div>
         {/* Auth Pages: Sign Up, Log In, Log Out */}
         <div className="hidden md:flex ml-auto items-center text-base justify-center">
