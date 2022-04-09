@@ -5,16 +5,18 @@ from sqlmodel import Session, select
 
 from db.main import create_db_and_tables, get_session
 from db.models import (
-    Hero, 
-    HeroRead, 
-    HeroCreate, 
-    HeroReadWithTeam, 
-    HeroUpdate, 
-    Team, 
-    TeamRead, 
-    TeamCreate, 
-    TeamReadWithHeroes, 
-    TeamUpdate,
+    User,
+    UserRead,
+    UserCreate,
+    UserUpdate,
+    Date, 
+    DateRead, 
+    DateCreate,
+    DateUpdate,
+    Task, 
+    TaskRead, 
+    TaskCreate,
+    TaskUpdate, 
 )
 
 app = FastAPI()
@@ -30,112 +32,154 @@ def read_root():
     return {"Hello": "World"}
 
 
-@app.post("/heroes/", response_model=HeroRead)
-def create_hero(*, session: Session = Depends(get_session), hero: HeroCreate):
-    db_hero = Hero.from_orm(hero)
-    session.add(db_hero)
+"""
+USERS
+"""
+
+@app.post("/users/", response_model=UserRead)
+def create_user(*, session: Session = Depends(get_session), task: TaskCreate):
+    db_user = User.from_orm(task)
+    session.add(db_user)
     session.commit()
-    session.refresh(db_hero)
-    return db_hero
+    session.refresh(db_user)
+    return db_user
 
 
-@app.get("/heroes/", response_model=List[HeroRead])
-def read_heroes(
+@app.get("/users/", response_model=List[UserRead])
+def read_users(
     *,
     session: Session = Depends(get_session),
     offset: int = 0,
     limit: int = Query(default=100, lte=100),
 ):
-    heroes = session.exec(select(Hero).offset(offset).limit(limit)).all()
-    return heroes
+    users = session.exec(select(User).offset(offset).limit(limit)).all()
+    return users
 
 
-@app.get("/heroes/{hero_id}", response_model=HeroReadWithTeam)
-def read_hero(*, session: Session = Depends(get_session), hero_id: int):
-    hero = session.get(Hero, hero_id)
-    if not hero:
-        raise HTTPException(status_code=404, detail="Hero not found")
-    return hero
-
-
-@app.patch("/heroes/{hero_id}", response_model=HeroRead)
-def update_hero(
-    *, session: Session = Depends(get_session), hero_id: int, hero: HeroUpdate
+@app.patch("/users/{user_id}", response_model=UserRead)
+def update_user(
+    *, session: Session = Depends(get_session), user_id: int, user: UserUpdate
 ):
-    db_hero = session.get(Hero, hero_id)
-    if not db_hero:
-        raise HTTPException(status_code=404, detail="Hero not found")
-    hero_data = hero.dict(exclude_unset=True)
-    for key, value in hero_data.items():
-        setattr(db_hero, key, value)
-    session.add(db_hero)
+    db_user = session.get(User, user_id)
+    if not db_user:
+        raise HTTPException(status_code=404, detail="User not found")
+    user_data = user.dict(exclude_unset=True)
+    for key, value in user_data.items():
+        setattr(db_user, key, value)
+    session.add(db_user)
     session.commit()
-    session.refresh(db_hero)
-    return db_hero
+    session.refresh(db_user)
+    return db_user
 
 
-@app.delete("/heroes/{hero_id}")
-def delete_hero(*, session: Session = Depends(get_session), hero_id: int):
-    hero = session.get(Hero, hero_id)
-    if not hero:
-        raise HTTPException(status_code=404, detail="Hero not found")
-    session.delete(hero)
+@app.delete("/users/{user_id}")
+def delete_user(*, session: Session = Depends(get_session), user_id: int):
+    user = session.get(User, user_id)
+    if not user:
+        raise HTTPException(status_code=404, detail="Task not found")
+    session.delete(user)
     session.commit()
     return {"ok": True}
 
 
-@app.post("/teams/", response_model=TeamRead)
-def create_team(*, session: Session = Depends(get_session), team: TeamCreate):
-    db_team = Team.from_orm(team)
-    session.add(db_team)
+"""
+TASKS
+"""
+
+@app.post("/tasks/", response_model=TaskRead)
+def create_task(*, session: Session = Depends(get_session), task: TaskCreate):
+    db_task = Task.from_orm(task)
+    session.add(db_task)
     session.commit()
-    session.refresh(db_team)
-    return db_team
+    session.refresh(db_task)
+    return db_task
 
 
-@app.get("/teams/", response_model=List[TeamRead])
-def read_teams(
+@app.get("/tasks/", response_model=List[TaskRead])
+def read_tasks(
     *,
     session: Session = Depends(get_session),
     offset: int = 0,
     limit: int = Query(default=100, lte=100),
 ):
-    teams = session.exec(select(Team).offset(offset).limit(limit)).all()
-    return teams
+    tasks = session.exec(select(Task).offset(offset).limit(limit)).all()
+    return tasks
 
 
-@app.get("/teams/{team_id}", response_model=TeamReadWithHeroes)
-def read_team(*, team_id: int, session: Session = Depends(get_session)):
-    team = session.get(Team, team_id)
-    if not team:
-        raise HTTPException(status_code=404, detail="Team not found")
-    return team
+@app.patch("/tasks/{task_id}", response_model=TaskRead)
+def update_task(
+    *, session: Session = Depends(get_session), task_id: int, task: TaskUpdate
+):
+    db_task = session.get(Task, task_id)
+    if not db_task:
+        raise HTTPException(status_code=404, detail="Task not found")
+    task_data = task.dict(exclude_unset=True)
+    for key, value in task_data.items():
+        setattr(db_task, key, value)
+    session.add(db_task)
+    session.commit()
+    session.refresh(db_task)
+    return db_task
 
 
-@app.patch("/teams/{team_id}", response_model=TeamRead)
-def update_team(
+@app.delete("/tasks/{task_id}")
+def delete_task(*, session: Session = Depends(get_session), task_id: int):
+    task = session.get(Task, task_id)
+    if not task:
+        raise HTTPException(status_code=404, detail="Task not found")
+    session.delete(task)
+    session.commit()
+    return {"ok": True}
+
+
+"""
+DATES
+"""
+
+@app.post("/dates/", response_model=DateRead)
+def create_date(*, session: Session = Depends(get_session), date: DateCreate):
+    db_date = Date.from_orm(date)
+    session.add(db_date)
+    session.commit()
+    session.refresh(db_date)
+    return db_date
+
+
+@app.get("/dates/", response_model=List[DateRead])
+def read_dates(
     *,
     session: Session = Depends(get_session),
-    team_id: int,
-    team: TeamUpdate,
+    offset: int = 0,
+    limit: int = Query(default=100, lte=100),
 ):
-    db_team = session.get(Team, team_id)
-    if not db_team:
-        raise HTTPException(status_code=404, detail="Team not found")
-    team_data = team.dict(exclude_unset=True)
-    for key, value in team_data.items():
-        setattr(db_team, key, value)
-    session.add(db_team)
+    dates = session.exec(select(Date).offset(offset).limit(limit)).all()
+    return dates
+
+
+@app.patch("/dates/{date_id}", response_model=DateRead)
+def update_date(
+    *,
+    session: Session = Depends(get_session),
+    date_id: int,
+    date: DateUpdate,
+):
+    db_date = session.get(Date, date_id)
+    if not db_date:
+        raise HTTPException(status_code=404, detail="Date not found")
+    date_data = date.dict(exclude_unset=True)
+    for key, value in date_data.items():
+        setattr(db_date, key, value)
+    session.add(db_date)
     session.commit()
-    session.refresh(db_team)
-    return db_team
+    session.refresh(db_date)
+    return db_date
 
 
-@app.delete("/teams/{team_id}")
-def delete_team(*, session: Session = Depends(get_session), team_id: int):
-    team = session.get(Team, team_id)
-    if not team:
-        raise HTTPException(status_code=404, detail="Team not found")
-    session.delete(team)
+@app.delete("/dates/{date_id}")
+def delete_date(*, session: Session = Depends(get_session), date_id: int):
+    date = session.get(Date, date_id)
+    if not date:
+        raise HTTPException(status_code=404, detail="Date not found")
+    session.delete(date)
     session.commit()
     return {"ok": True}

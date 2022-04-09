@@ -1,65 +1,80 @@
-from typing import List, Optional
+from datetime import date
+from typing import List, Optional, Tuple
 
 from sqlmodel import SQLModel, Field, Relationship
 
 
-class TeamBase(SQLModel):
-    name: str = Field(index=True)
-    headquarters: str
+class UserBase(SQLModel):
+    name: str
+    email: str
+    password: str
+    schedule: Tuple[float, float, float, float, float, float, float]
 
 
-class Team(TeamBase, table=True):
+class User(UserBase):
     id: Optional[int] = Field(default=None, primary_key=True)
 
-    heroes: List["Hero"] = Relationship(back_populates="team")
 
-
-class TeamCreate(TeamBase):
+class UserCreate(UserBase):
     pass
 
 
-class TeamRead(TeamBase):
+class UserRead(UserBase):
     id: int
 
 
-class TeamUpdate(SQLModel):
-    id: Optional[int] = None
-    name: Optional[str] = None
-    headquarters: Optional[str] = None
+class UserUpdate(UserBase):
+    schedule: Optional[Tuple[float, float, float, float, float, float, float]] = None
 
 
-class HeroBase(SQLModel):
-    name: str = Field(index=True)
-    secret_name: str
-    age: Optional[int] = Field(default=None, index=True)
-
-    team_id: Optional[int] = Field(default=None, foreign_key="team.id")
+class DateBase(SQLModel):
+    user_id: int
+    date: date
+    hours: float
 
 
-class Hero(HeroBase, table=True):
+class Date(DateBase, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
 
-    team: Optional[Team] = Relationship(back_populates="heroes")
 
-
-class HeroRead(HeroBase):
-    id: int
-
-
-class HeroCreate(HeroBase):
+class DateCreate(DateBase):
     pass
 
 
-class HeroUpdate(SQLModel):
-    name: Optional[str] = None
-    secret_name: Optional[str] = None
-    age: Optional[int] = None
-    team_id: Optional[int] = None
+class DateRead(DateBase):
+    id: int
 
 
-class HeroReadWithTeam(HeroRead):
-    team: Optional[TeamRead] = None
+class DateUpdate(SQLModel):
+    hours: Optional[float] = None
 
 
-class TeamReadWithHeroes(TeamRead):
-    heroes: List[HeroRead] = []
+class TaskBase(SQLModel):
+    user_id: int
+    name: str
+    description: str
+    start_date: Optional[date]
+    due_date: Optional[date]
+    completed: bool
+    hours_estimated: Optional[float]
+    hours_spent: Optional[float]
+
+
+class Task(TaskBase, table=True):
+    id: Optional[int] = Field(default=None, primary_key=True)
+
+
+class TaskRead(TaskBase):
+    id: int
+
+
+class TaskCreate(TaskBase):
+    pass
+
+
+class TaskUpdate(TaskBase):
+    start_date: Optional[date] = None
+    due_date: Optional[date] = None
+    completed: Optional[bool] = None
+    hours_estimated: Optional[float] = None
+    hours_spent: Optional[float] = None
