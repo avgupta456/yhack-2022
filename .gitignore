@@ -3,3 +3,6 @@
 
 backend/poetry.lock
 backend/database.db
+
+# Frontend
+frontend/yarn.lock
