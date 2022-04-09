@@ -1,8 +1,6 @@
-from typing import Optional
+from sqlmodel import SQLModel, create_engine, Session
 
-from sqlmodel import Field, SQLModel, create_engine, Session
-
-from db.models import *
+from db.models import User, Date, Task
 
 sqlite_file_name = "database.db"
 sqlite_url = f"sqlite:///{sqlite_file_name}"

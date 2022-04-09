@@ -60,7 +60,9 @@ const Header = () => {
   const [toggle, setToggle] = useState(false);
 
   const userId = useSelector((state) => state.user.userId);
-  const isAuthenticated = userId && userId.length > 0;
+  const isAuthenticated = userId && userId > 0;
+
+  console.log(userId, isAuthenticated);
 
   const dispatch = useDispatch();
   const logout = () => dispatch(_logout());

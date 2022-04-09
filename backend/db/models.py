@@ -1,17 +1,20 @@
 from datetime import date
-from typing import List, Optional, Tuple
+from typing import Optional, Tuple
 
-from sqlmodel import SQLModel, Field, Relationship
+from sqlmodel import SQLModel, Field
 
+
+"""
+USERS
+"""
 
 class UserBase(SQLModel):
     name: str
     email: str
     password: str
-    schedule: Tuple[float, float, float, float, float, float, float]
 
 
-class User(UserBase):
+class User(UserBase, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
 
 
@@ -26,6 +29,15 @@ class UserRead(UserBase):
 class UserUpdate(UserBase):
     schedule: Optional[Tuple[float, float, float, float, float, float, float]] = None
 
+
+class UserLogin(SQLModel):
+    email: str
+    password: str
+
+
+"""
+DATES
+"""
 
 class DateBase(SQLModel):
     user_id: int
@@ -48,6 +60,10 @@ class DateRead(DateBase):
 class DateUpdate(SQLModel):
     hours: Optional[float] = None
 
+
+"""
+TASKS
+"""
 
 class TaskBase(SQLModel):
     user_id: int

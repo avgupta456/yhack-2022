@@ -1,6 +1,7 @@
 from typing import List
 
 from fastapi import Depends, FastAPI, HTTPException, Query
+from fastapi.middleware.cors import CORSMiddleware
 from sqlmodel import Session, select
 
 from db.main import create_db_and_tables, get_session
@@ -9,6 +10,7 @@ from db.models import (
     UserRead,
     UserCreate,
     UserUpdate,
+    UserLogin,
     Date, 
     DateRead, 
     DateCreate,
@@ -20,6 +22,18 @@ from db.models import (
 )
 
 app = FastAPI()
+
+origins = [
+    "http://localhost:3000",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 @app.on_event("startup")
@@ -37,7 +51,7 @@ USERS
 """
 
 @app.post("/users/", response_model=UserRead)
-def create_user(*, session: Session = Depends(get_session), task: TaskCreate):
+def create_user(*, session: Session = Depends(get_session), task: UserCreate):
     db_user = User.from_orm(task)
     session.add(db_user)
     session.commit()
@@ -80,6 +94,16 @@ def delete_user(*, session: Session = Depends(get_session), user_id: int):
     session.delete(user)
     session.commit()
     return {"ok": True}
+
+
+@app.post("/users/login", response_model=int)
+def login_user(*, session: Session = Depends(get_session), user: UserLogin):
+    db_user: User = session.exec(select(User).where(User.email == user.email)).first()
+    if not db_user:
+        raise HTTPException(status_code=404, detail="User not found")
+    if db_user.password != user.password:
+        raise HTTPException(status_code=401, detail="Incorrect password")
+    return db_user.id
 
 
 """
