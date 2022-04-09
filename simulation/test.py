@@ -15,18 +15,19 @@ t1 = Assignment("181 pset", "physics pset", 0, 7, 3, 3)
 t2 = Assignment("quiz", "physics quiz", 5, 7, 1, 1)
 t3 = Assignment("lab report", "fluids lab report", 2, 9, 15, 15)
 t4 = Assignment("389 pset", "heat transfer pset", 4, 11, 2, 2)
-t5 = Assignment("research", "research", 0, 13, 16, 16)
+#t5 = Assignment("research", "research", 0, 13, 16, 16)
 
-tasks = [t1, t2, t3, t4 ,t5]
+tasks = [t1, t2, t3, t4 ]#,t5]
 
 
 times = [6, 3, 3, 3, 3, 4, 6, 6, 3, 3, 3, 3, 4, 6]
 
 #prints the task that has the nearest due date with most amount of time left
-def todo(tasks):
-    for x in tasks:
-        if x.hours_left <= 0:
-            tasks.remove(x)
+def todo(tasks, curr_date):
+    # for x in tasks:
+    #     if x.hours_left <= 0: #or x.start_date > curr_date
+    #         tasks.remove(x)
+    tasks = [t for t in tasks if t.hours_left > 0 and t.start_date <= curr_date]
     if len(tasks) == 0:
         return None
     do_next = tasks[0]
@@ -40,16 +41,13 @@ def todo(tasks):
 #
 def schedule(tasks, times):
     numHours = 0
-    for i in times:
-        numHours = numHours + i
-    print(numHours)
-    
-    for j in range(numHours):
-        do_next = todo(tasks)
-        if do_next is None:
-            print(j, "Free Time")
-        else:
-            do_next.hours_left -= 1
-            print(j, do_next.name)
+    for i in range(len(times)):
+        for j in range(times[i]):
+            do_next = todo(tasks, i)
+            if do_next is None:
+                print(i, j, "Free Time")
+            else:
+                do_next.hours_left -= 1
+                print(i, j, do_next.name)
 
 schedule(tasks, times)
