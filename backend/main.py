@@ -99,7 +99,7 @@ def delete_user(*, session: Session = Depends(get_session), user_id: int):
     return {"ok": True}
 
 
-@app.post("/users/login", response_model=int)
+@app.post("/users/login", response_model=UserRead)
 def login_user(*, session: Session = Depends(get_session), user: UserLogin):
     db_user = session.exec(select(User).where(User.email == user.email)).first()
     if not db_user:
