@@ -6,3 +6,6 @@ backend/database.db
 
 # Frontend
 frontend/yarn.lock
+
+# Simulation
+simulation/poetry.lock
