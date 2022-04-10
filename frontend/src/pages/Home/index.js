@@ -1,3 +1,4 @@
 import HomeScreen from "./Home";
+import TodayScreen from "./Today";
 
-export default HomeScreen;
+export { HomeScreen, TodayScreen };

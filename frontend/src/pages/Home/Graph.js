@@ -1,8 +1,10 @@
 /* eslint-disable */
 
 import React, { useRef, useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 
 import { GraphView } from "react-digraph";
+import { setGraph } from "../../redux/actions/userActions";
 
 const GraphConfig = {
   NodeTypes: {
@@ -61,19 +63,14 @@ const days = [
   "Thursday",
   "Friday",
   "Saturday",
-  "Sunday",
-  "Monday",
-  "Tuesday",
-  "Wednesday",
-  "Thursday",
-  "Friday",
-  "Saturday",
 ];
 
 const N = days.length;
 
-const sample = {
-  nodes: [
+const Graph = () => {
+  const dispatch = useDispatch();
+
+  const [nodes, _setNodes] = useState([
     ...days.map((day, i) => ({
       id: i,
       title: day,
@@ -88,13 +85,17 @@ const sample = {
       y: 700,
       type: "endDate",
     })),
-  ],
-  edges: [],
-};
+  ]);
+  const [edges, _setEdges] = useState([]);
 
-const Graph = () => {
-  const [nodes, setNodes] = useState(sample.nodes);
-  const [edges, setEdges] = useState(sample.edges);
+  const setNodes = (nodes) => {
+    dispatch(setGraph(nodes, edges));
+    _setNodes(nodes);
+  };
+
+  const setEdges = (edges) => {
+    _setEdges(edges);
+  };
   const [selected, setSelected] = useState(null);
 
   const [name, setName] = useState("");

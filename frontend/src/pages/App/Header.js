@@ -81,12 +81,20 @@ const Header = () => {
         {/* Content Pages */}
         <div className="hidden md:flex">
           {isAuthenticated && (
-            <Link
-              to="/user"
-              className="px-4 py-1 mr-3 rounded-sm bg-cyan-500 hover:bg-cyan-700 hover:text-gray-300"
-            >
-              Dashboard
-            </Link>
+            <div>
+              <Link
+                to="/user"
+                className="px-4 py-1 mr-3 rounded-sm bg-cyan-500 hover:bg-cyan-700 hover:text-gray-300"
+              >
+                Dashboard
+              </Link>
+              <Link
+                to="/today"
+                className="px-4 py-1 mr-3 rounded-sm bg-cyan-500 hover:bg-cyan-700 hover:text-gray-300"
+              >
+                Today
+              </Link>
+            </div>
           )}
         </div>
         {/* Auth Pages: Sign Up, Log In, Log Out */}

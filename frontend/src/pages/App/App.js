@@ -8,7 +8,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Header from "./Header";
 import LandingScreen from "../Landing";
 import { LoginScreen, SignUpScreen } from "../Auth";
-import HomeScreen from "../Home";
+import { HomeScreen, TodayScreen } from "../Home";
 import NoMatchScreen from "../Misc";
 
 function App() {
@@ -28,6 +28,7 @@ function App() {
               <Route path="/signup" element={<SignUpScreen />} />
             )}
             <Route path="/user" element={<HomeScreen />} />
+            <Route path="/today" element={<TodayScreen />} />
             <Route exact path="/" element={<LandingScreen />} />
             <Route path="*" element={<NoMatchScreen />} />
           </Routes>
