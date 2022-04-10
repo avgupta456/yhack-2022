@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 import { GiHamburgerMenu as HamburgerIcon } from "react-icons/gi";
 
 import { logout as _logout } from "../../redux/actions/userActions";
-import rocketIcon from "../../assets/rocket.png";
+import logo from "../../assets/logo.jpg";
 import { classnames } from "../../utils";
 
 const propTypes = {
@@ -75,15 +75,15 @@ const Header = () => {
           to="/"
           className="flex items-center title-font font-medium text-gray-700 mb-0 md:mr-8"
         >
-          <img src={rocketIcon} alt="logo" className="w-6 h-6" />
-          <span className="ml-2 text-xl">TODO</span>
+          <img src={logo} alt="logo" className="w-6 h-6" />
+          <span className="ml-2 text-xl">Clockwork</span>
         </Link>
         {/* Content Pages */}
         <div className="hidden md:flex">
           {isAuthenticated && (
             <Link
               to="/user"
-              className="px-4 py-1 mr-3 rounded-sm bg-blue-500 hover:bg-blue-700 hover:text-gray-300"
+              className="px-4 py-1 mr-3 rounded-sm bg-cyan-500 hover:bg-cyan-700 hover:text-gray-300"
             >
               Dashboard
             </Link>
@@ -100,7 +100,7 @@ const Header = () => {
               <StandardLink to="/login">Login</StandardLink>
               <Link
                 to="/signup"
-                className="px-4 py-1 mr-3 rounded-sm bg-blue-500 hover:bg-blue-700 hover:text-gray-300"
+                className="px-4 py-1 mr-3 rounded-sm bg-cyan-500 hover:bg-cyan-700 hover:text-gray-300"
               >
                 Sign Up
               </Link>
@@ -143,7 +143,7 @@ const Header = () => {
             <Link
               to="/signup"
               onClick={() => setToggle(false)}
-              className="block text-sm px-2 my-2 py-2 rounded-sm bg-blue-500 text-white"
+              className="block text-sm px-2 my-2 py-2 rounded-sm bg-cyan-500 text-white"
             >
               Sign Up
             </Link>

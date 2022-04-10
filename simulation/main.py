@@ -96,12 +96,20 @@ def run_experiment(hours_per_day, breaks, plot=False):
             ax.bar(list(range(14)), hours_worked[t], bottom=curr, label=t, tick_label=days)
             for task in tasks:
                 if task.name == t:
-                    ax.plot([task.end_date() + 0.5, task.end_date() + 0.5], [0, hours_per_day], "--")
+                    ax.plot([task.end_date() + 0.5, task.end_date() + 0.5], [0, 5], "--")
             curr = [x + y for x, y in zip(curr, hours_worked[t])]
         ax.legend()
         plt.show()
     
     return error
 
-print(run_experiment(4, {}, True))
-print(run_experiment(4, {1: 1, 2: 1, 3:1, 4:1, 5:1, 6:3, 7:3, 8:2, 9:2, 10:2, 11:3, 12:4}, True))
+hours_per_day = 5
+run_experiment(hours_per_day, {}, True)
+print(run_experiment(hours_per_day, {1: 5, 2: 5, 6:5, 7:5, 8:1, 9:5, 10:1, 11:5, 12: 5}, True))
+
+error = False
+while not error:
+    hours_per_day -= 1
+    error = run_experiment(hours_per_day, {}, False)
+hours_per_day += 1
+print(run_experiment(hours_per_day, {6:2, 7:2, 8:1, 9:1, 10:1, 11:2, 12:3}, True))

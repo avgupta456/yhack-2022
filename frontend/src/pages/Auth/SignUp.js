@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 import { signUp } from "../../api";
 import { login as _login } from "../../redux/actions/userActions";
-import rocketIcon from "../../assets/rocket.png";
+import logo from "../../assets/logo.jpg";
 
 const SignUpScreen = () => {
   const navigate = useNavigate();
@@ -28,15 +28,15 @@ const SignUpScreen = () => {
     <div className="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">
         <div>
-          <img className="mx-auto h-12 w-auto" src={rocketIcon} alt="Logo" />
+          <img className="mx-auto h-12 w-auto" src={logo} alt="Logo" />
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-            Create a TODO Account
+            Create a Clockwork Account
           </h2>
           <p className="mt-2 text-center text-sm text-gray-600">
             Or
             <Link
               to="/login"
-              className="font-medium text-blue-600 hover:text-blue-500"
+              className="font-medium text-cyan-600 hover:text-cyan-500"
             >
               {" "}
               log in with an existing account
@@ -56,7 +56,7 @@ const SignUpScreen = () => {
                 type="name"
                 autoComplete="name"
                 required
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
+                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-cyan-500 focus:border-cyan-500 focus:z-10 sm:text-sm"
                 placeholder="Full name"
                 onChange={(e) => setName(e.target.value)}
               />
@@ -71,7 +71,7 @@ const SignUpScreen = () => {
                 type="email"
                 autoComplete="email"
                 required
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
+                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-cyan-500 focus:border-cyan-500 focus:z-10 sm:text-sm"
                 placeholder="Email address"
                 onChange={(e) => setEmail(e.target.value)}
               />
@@ -86,7 +86,7 @@ const SignUpScreen = () => {
                 type="password"
                 autoComplete="current-password"
                 required
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
+                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-cyan-500 focus:border-cyan-500 focus:z-10 sm:text-sm"
                 placeholder="Password"
                 onChange={(e) => setPassword(e.target.value)}
               />
@@ -99,7 +99,7 @@ const SignUpScreen = () => {
                 id="remember-me"
                 name="remember-me"
                 type="checkbox"
-                className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                className="h-4 w-4 text-cyan-600 focus:ring-cyan-500 border-gray-300 rounded"
               />
               <label
                 htmlFor="remember-me"
@@ -114,7 +114,7 @@ const SignUpScreen = () => {
             <button
               type="button"
               onClick={() => signup()}
-              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-cyan-600 hover:bg-cyan-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500"
             >
               Create Account
             </button>
